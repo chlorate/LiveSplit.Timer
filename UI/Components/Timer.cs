@@ -133,6 +133,7 @@ namespace LiveSplit.UI.Components
                 PreviousDecimalsSize = Settings.DecimalsSize;
             }
 
+            BigMeasureLabel.Text = Settings.Measure;
             BigTextLabel.Font = BigMeasureLabel.Font = TimerFont;
             SmallTextLabel.Font = TimerDecimalPlacesFont;
 

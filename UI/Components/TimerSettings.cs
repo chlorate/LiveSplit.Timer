@@ -13,6 +13,8 @@ namespace LiveSplit.UI.Components
 
         public float DecimalsSize { get; set; }
 
+        public string Measure { get; set; }
+
         private string timerFormat
         {
             get
@@ -63,6 +65,7 @@ namespace LiveSplit.UI.Components
 
             TimerWidth = 225;
             TimerHeight = 50;
+            Measure = "00:00:00";
             DigitsFormat = "1";
             Accuracy = ".23";
             TimerColor = Color.FromArgb(170, 170, 170);
@@ -84,8 +87,14 @@ namespace LiveSplit.UI.Components
             chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
             trkDecimalsSize.DataBindings.Add("Value", this, "DecimalsSize", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbMeasure.DataBindings.Add("SelectedItem", this, "Measure", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbDigitsFormat.DataBindings.Add("SelectedItem", this, "DigitsFormat", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbAccuracy.DataBindings.Add("SelectedItem", this, "Accuracy", false, DataSourceUpdateMode.OnPropertyChanged);
+        }
+
+        private void cmbMeasure_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Measure = cmbMeasure.SelectedItem.ToString();
         }
 
         void cmbTimerFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -167,6 +176,7 @@ namespace LiveSplit.UI.Components
 
             TimerHeight = SettingsHelper.ParseFloat(element["TimerHeight"]);
             TimerWidth = SettingsHelper.ParseFloat(element["TimerWidth"]);
+            Measure = SettingsHelper.ParseString(element["Measure"], "00:00:00");
             ShowGradient = SettingsHelper.ParseBool(element["ShowGradient"], true);
             TimerColor = SettingsHelper.ParseColor(element["TimerColor"], Color.FromArgb(170, 170, 170));
             DecimalsSize = SettingsHelper.ParseFloat(element["DecimalsSize"], 35f);
@@ -223,6 +233,7 @@ namespace LiveSplit.UI.Components
             return SettingsHelper.CreateSetting(document, parent, "Version", "1.5") ^
             SettingsHelper.CreateSetting(document, parent, "TimerHeight", TimerHeight) ^
             SettingsHelper.CreateSetting(document, parent, "TimerWidth", TimerWidth) ^
+            SettingsHelper.CreateSetting(document, parent, "Measure", Measure) ^
             SettingsHelper.CreateSetting(document, parent, "TimerFormat", timerFormat) ^
             SettingsHelper.CreateSetting(document, parent, "OverrideSplitColors", OverrideSplitColors) ^
             SettingsHelper.CreateSetting(document, parent, "ShowGradient", ShowGradient) ^
